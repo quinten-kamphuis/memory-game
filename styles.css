@@ -26,12 +26,9 @@ main{
     justify-content: space-around;
     flex-wrap: wrap;
 }
-.card {
-    height: 200px;
-    width: 150px;
+main > div > * {
     border-radius: 10px;
     background-color: white;
-    margin: 20px;
     text-align: center;
     font-size: 4.6em;
     display: flex;
@@ -39,6 +36,11 @@ main{
     align-items: center;
     cursor: pointer;
     color: black;
+}
+.card {
+    height: 200px;
+    margin: 20px;
+    width: 150px;
 }
 .set{
     cursor: not-allowed;

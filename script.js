@@ -2,7 +2,9 @@ const menuButton = document.getElementById('menu');
 const scoreDiv = document.getElementById('score');
 const timerDiv = document.getElementById('timer');
 
+const gameScreen = document.getElementById('game-screen');
 const flexContainer = document.getElementById('flex-container');
+const startScreen = document.getElementById('start-screen');
 const pictureArr = [];
 
 let cardsClickable = true;
@@ -10,7 +12,7 @@ let isFirst = true;
 let lastClicked = 0;
 let lastClickedIndex = 0;
 let numOfSetsFound = 0;
-let numOfCards = 12;
+let numOfCards = 18;
 
 const changeAllCards = (cursor, content) => {
     const cards = document.querySelectorAll('.card.unset');
@@ -70,7 +72,7 @@ const makePictures = (pictures) => {
         return;
     }
     while(pictureArr.length < pictures*2){
-        const picture = Math.floor(Math.random() * 9 + 1);
+        const picture = Math.floor(Math.random() * numOfCards/2 + 1);
         if (!pictureArr.includes(picture)){
             pictureArr.push(picture, picture);
         }
@@ -78,21 +80,20 @@ const makePictures = (pictures) => {
     pictureArr.sort(() => Math.random() - 0.5);
 };
 
-const makeCards = (cards) => {
-    if (cards % 2 === 1){
+const makeCards = () => {
+    if (numOfCards % 2 === 1){
         console.warn("The number of cards must be even! It's corrected down.") 
         numOfCards--;
-        cards--;
     }
     flexContainer.innerHTML = ``;
-    for(i = 1; i <= cards; i++){
+    for(i = 1; i <= numOfCards; i++){
         flexContainer.innerHTML += `<div id="card-${i}"class="card unset"></div>`;
     }
-    makePictures(cards/2);
+    makePictures(numOfCards/2);
 };
 
 const startGame = () => {
-    makeCards(numOfCards);
+    makeCards();
     const cardDivs = flexContainer.children;
     for (let i = 0; i < cardDivs.length; i++){
         cardDivs[i].addEventListener('click', () => {
@@ -100,4 +101,20 @@ const startGame = () => {
         })
     }
 };
-startGame();
+
+const menuScreen = () => {
+
+}
+
+const switchScreen = (section, screen) => {
+    const screens = document.querySelector('main').children;
+    for (let i = 0; i < screens.length; i++){
+        screens[i].style.display = 'none';
+    }
+    section.style.display = 'flex';
+    screen()
+};
+
+document.getElementById('singleplayer').addEventListener('click', () => switchScreen(flexContainer, startGame));
+
+menuButton.addEventListener('click', () => switchScreen(startScreen, menuScreen));
