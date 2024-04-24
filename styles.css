@@ -41,5 +41,6 @@ main{
     color: black;
 }
 .set{
+    cursor: not-allowed;
     color: gray;
 }
