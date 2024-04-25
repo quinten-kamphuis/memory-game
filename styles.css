@@ -19,14 +19,35 @@ main{
     width: 100vw;
     height: 100vh;
     background-color: lightgreen;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-#flex-container{
-    margin: 6% 5%;
+#flex-container, #start-screen{
+    margin: 0 auto;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    align-items: center;
+    display: none;
 }
-main > div > * {
+#flex-container{
+    gap: 20px;
+}
+#start-screen{
+    flex-direction: column;
+}
+.menu-button{
+    height: 60px;
+    width: 400px;
+    margin: 20px;
+    border-radius: 10px;
+    background-color: white;
+    text-align: center;
+    font-size: 4.6em;
+}
+.card {
+    aspect-ratio: 1 / 1.2;
     border-radius: 10px;
     background-color: white;
     text-align: center;
@@ -37,11 +58,12 @@ main > div > * {
     cursor: pointer;
     color: black;
 }
-.card {
-    height: 200px;
-    margin: 20px;
-    width: 150px;
-}
+.card::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
+  
 .set{
     cursor: not-allowed;
     color: gray;

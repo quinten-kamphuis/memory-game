@@ -67,10 +67,6 @@ const showCard = (cardDiv, cardNum) => {
 };
 
 const makePictures = (pictures) => {
-    if (pictures > 9) {
-        console.error('Too many cards for algorithm, infinite loop!');
-        return;
-    }
     while(pictureArr.length < pictures*2){
         const picture = Math.floor(Math.random() * numOfCards/2 + 1);
         if (!pictureArr.includes(picture)){
@@ -118,3 +114,5 @@ const switchScreen = (section, screen) => {
 document.getElementById('singleplayer').addEventListener('click', () => switchScreen(flexContainer, startGame));
 
 menuButton.addEventListener('click', () => switchScreen(startScreen, menuScreen));
+
+switchScreen(flexContainer, startGame)
