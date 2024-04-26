@@ -9,13 +9,19 @@ body {
     font-size: 10px;
     background-color: black;
 }
-header {
+#top-bar{
     background-color: white;
     display: flex;
     justify-content: space-between;
     font-size: 2.6em;
 }
-main{
+#game-screen, #start-screen{
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    display: none;
     width: 100vw;
     height: 100vh;
     background-color: lightgreen;
@@ -23,16 +29,11 @@ main{
     flex-direction: column;
     justify-content: center;
 }
-#flex-container, #start-screen{
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    align-items: center;
-    display: none;
-}
-#flex-container{
+#grid-container{
+    display: grid;
+    grid-template-columns: auto auto auto auto ;
     gap: 20px;
+    padding: 10px;
 }
 #start-screen{
     flex-direction: column;
@@ -45,6 +46,7 @@ main{
     background-color: white;
     text-align: center;
     font-size: 4.6em;
+    cursor: pointer;
 }
 .card {
     aspect-ratio: 1 / 1.2;

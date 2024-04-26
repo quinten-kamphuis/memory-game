@@ -2,9 +2,10 @@ const menuButton = document.getElementById('menu');
 const scoreDiv = document.getElementById('score');
 const timerDiv = document.getElementById('timer');
 
-const gameScreen = document.getElementById('game-screen');
-const flexContainer = document.getElementById('flex-container');
 const startScreen = document.getElementById('start-screen');
+const gameScreen = document.getElementById('game-screen');
+const topBar = document.getElementById('top-bar');
+const gridContainer = document.getElementById('grid-container');
 const pictureArr = [];
 
 let cardsClickable = true;
@@ -12,7 +13,7 @@ let isFirst = true;
 let lastClicked = 0;
 let lastClickedIndex = 0;
 let numOfSetsFound = 0;
-let numOfCards = 18;
+let numOfCards = 12;
 
 const changeAllCards = (cursor, content) => {
     const cards = document.querySelectorAll('.card.unset');
@@ -24,10 +25,10 @@ const changeAllCards = (cursor, content) => {
 
 const disableCards = () => {
     cardsClickable = false;
-    document.querySelector('main').style.backgroundColor = '#FFD580';
+    document.querySelector('#game-screen').style.backgroundColor = '#FFD580';
     changeAllCards('not-allowed')
     setTimeout(() => {
-        document.querySelector('main').style.backgroundColor = 'lightgreen';
+        document.querySelector('#game-screen').style.backgroundColor = 'lightgreen';
         changeAllCards('pointer')
         cardsClickable = true;
         if (isFirst) {
@@ -40,7 +41,7 @@ const disableCards = () => {
 };
 
 const roundWon = () => {
-    flexContainer.innerHTML = `<h1>You Won!</h1>`;
+    gridContainer.innerHTML = `<h1>You Won!</h1>`;
 };
 
 const checkForSet = (cardNum) => {
@@ -81,16 +82,21 @@ const makeCards = () => {
         console.warn("The number of cards must be even! It's corrected down.") 
         numOfCards--;
     }
-    flexContainer.innerHTML = ``;
+    gridContainer.innerHTML = ``;
     for(i = 1; i <= numOfCards; i++){
-        flexContainer.innerHTML += `<div id="card-${i}"class="card unset"></div>`;
+        gridContainer.innerHTML += `<div id="card-${i}"class="card unset"></div>`;
     }
     makePictures(numOfCards/2);
 };
 
+const showTopBar = () => {
+    topBar.style.display = 'flex';
+};
+ 
 const startGame = () => {
+    showTopBar();
     makeCards();
-    const cardDivs = flexContainer.children;
+    const cardDivs = gridContainer.children;
     for (let i = 0; i < cardDivs.length; i++){
         cardDivs[i].addEventListener('click', () => {
             showCard(cardDivs[i], i);
@@ -103,7 +109,7 @@ const menuScreen = () => {
 }
 
 const switchScreen = (section, screen) => {
-    const screens = document.querySelector('main').children;
+    const screens = document.querySelector('body').children;
     for (let i = 0; i < screens.length; i++){
         screens[i].style.display = 'none';
     }
@@ -111,8 +117,9 @@ const switchScreen = (section, screen) => {
     screen()
 };
 
-document.getElementById('singleplayer').addEventListener('click', () => switchScreen(flexContainer, startGame));
+document.getElementById('singleplayer').addEventListener('click', () => switchScreen(gameScreen, startGame));
 
 menuButton.addEventListener('click', () => switchScreen(startScreen, menuScreen));
 
-switchScreen(flexContainer, startGame)
+// switchScreen(startScreen, menuScreen);
+switchScreen(gameScreen, startGame);

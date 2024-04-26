@@ -9,20 +9,18 @@
     <script defer src="responsive.js"></script>
 </head>
 <body>
-    <header>
+    <div id="start-screen">
+        <div id="singleplayer" class="menu-button">Singleplayer</div>
+        <div id="multiplayer" class="menu-button">Multiplayer</div>
+        <div id="credits" class="menu-button">Credits</div>
+    </div>
+    <div id="top-bar">
         <div id="menu">Menu</div>
         <div id="score">0</div>
         <div id="timer">00:00</div>
-    </header>
-    <main>
-        <div id="flex-container">
-            
-        </div>
-        <div id="start-screen">
-            <div id="singleplayer" class="menu-button">Singleplayer</div>
-            <div id="multiplayer" class="menu-button">Multiplayer</div>
-            <div id="credits" class="menu-button">Credits</div>
-        </div>
-    </main>
+    </div>
+    <div id="game-screen">
+        <div id="grid-container"></div>
+    </div>
 </body>
 </html>
