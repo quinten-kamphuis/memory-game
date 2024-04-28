@@ -15,10 +15,11 @@ let lastClickedIndex = 0;
 let currentCard;
 let numOfSetsFound = 0;
 let numOfCards = 18;
-let lives = 2;
+let lives = 5;
 let currentLives;
 
 const setLives = () => {
+    console.log(currentLives)
     let livesString = '❤️';
     for (let i = 1; i < currentLives; i++) {
         livesString += ' ❤️';
@@ -67,15 +68,15 @@ const gameLost = () => {
 
 const notASet = () => {
     currentLives--;
-    if (currentLives > 0){
+    if (currentLives >= 0){
         setLives();
+        document.querySelector('#game-screen').style.backgroundColor = '#FFD580';
+        setTimeout(() => {
+            document.querySelector('#game-screen').style.backgroundColor = 'lightgreen';
+        },1200);
     } else {
         gameLost();
-    }
-    document.querySelector('#game-screen').style.backgroundColor = '#FFD580';
-        setTimeout(() => {
-        document.querySelector('#game-screen').style.backgroundColor = 'lightgreen';
-    },1200);
+    }   
 };
 
 const checkForSet = () => {
