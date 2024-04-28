@@ -2,7 +2,6 @@
 const closestFactorToSqrt = n => Array.from({length: n}, (_, i) => i + 1).filter(i => n % i === 0).reduce((acc, x) => Math.abs(x - Math.sqrt(n)) < Math.abs(acc - Math.sqrt(n)) ? x : acc);
 const closestFactorToFourthRoot = n => Array.from({length: n}, (_, i) => i + 1).filter(i => n % i === 0).reduce((acc, x) => Math.abs(x - Math.pow(n, 1/4)) < Math.abs(acc - Math.pow(n, 1/4)) ? x : acc);
 
-
 const adjustCardLayout = () => {
     const container = document.getElementById('grid-container');
     const screenWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
@@ -21,10 +20,10 @@ const adjustCardLayout = () => {
         bestLayout.columns = closestFactorToSqrt(numCards);
         bestLayout.rows = numCards / bestLayout.columns;
     }
-    if (aspectRatio > aspectRatioCard * 2.8){
+    if (aspectRatio > aspectRatioCard * (0.18 * numCards)){
         bestLayout.rows = closestFactorToFourthRoot(numCards);
         bestLayout.columns = numCards / bestLayout.rows;
-    } else if (aspectRatio <= aspectRatioCard * 0.65) {
+    } else if (aspectRatio <= aspectRatioCard * 0.40) {
         bestLayout.columns = closestFactorToFourthRoot(numCards);
         bestLayout.rows = numCards / bestLayout.columns;
     }
@@ -38,8 +37,8 @@ const adjustCardLayout = () => {
     
     gridContainer.style.gridTemplateColumns = "auto ".repeat(bestLayout.columns);
     
-    const cardHeight = Math.floor((screenHeight * 0.7) / bestLayout.rows);
-    const cardWidth = cardHeight * aspectRatioCard;
+    const cardHeight = Math.floor((screenHeight * 0.5) / bestLayout.rows);
+    const cardWidth = Math.floor((screenWidth * 0.7) / bestLayout.columns);
     
     // console.log(`
     // Card Height: ${cardHeight}
@@ -47,12 +46,11 @@ const adjustCardLayout = () => {
     
     cards.forEach(card => {
         card.style.height = `${cardHeight}px`;
-        card.style.width = `${cardWidth}px`;
+        // card.style.width = `${(cardHeight + cardWidth)/2 * aspectRatioCard}px`;
     });
     container.style.maxWidth = `${(cardWidth * bestLayout.columns) * 1.3}px`;
 };
 
-// Initial layout adjustment and on window resize
 window.addEventListener('load', adjustCardLayout);
 window.addEventListener('resize', adjustCardLayout);
 document.addEventListener('click', adjustCardLayout);

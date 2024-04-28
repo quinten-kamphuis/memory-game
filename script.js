@@ -1,6 +1,6 @@
-const menuButton = document.getElementById('menu');
-const scoreDiv = document.getElementById('score');
-const timerDiv = document.getElementById('timer');
+const menuButton = document.getElementById('menu-btn');
+const livesDiv = document.getElementById('lives');
+const roundsDiv = document.getElementById('rounds');
 
 const startScreen = document.getElementById('start-screen');
 const gameScreen = document.getElementById('game-screen');
@@ -12,8 +12,20 @@ let cardsClickable = true;
 let isFirst = true;
 let lastClicked = 0;
 let lastClickedIndex = 0;
+let currentCard;
 let numOfSetsFound = 0;
-let numOfCards = 12;
+let numOfCards = 18;
+let lives = 2;
+let currentLives;
+
+const setLives = () => {
+    let livesString = '❤️';
+    for (let i = 1; i < currentLives; i++) {
+        livesString += ' ❤️';
+    }
+    livesDiv.textContent = livesString;
+    if (currentLives < 1) livesDiv.textContent = '';
+};
 
 const changeAllCards = (cursor, content) => {
     const cards = document.querySelectorAll('.card.unset');
@@ -25,10 +37,8 @@ const changeAllCards = (cursor, content) => {
 
 const disableCards = () => {
     cardsClickable = false;
-    document.querySelector('#game-screen').style.backgroundColor = '#FFD580';
     changeAllCards('not-allowed')
     setTimeout(() => {
-        document.querySelector('#game-screen').style.backgroundColor = 'lightgreen';
         changeAllCards('pointer')
         cardsClickable = true;
         if (isFirst) {
@@ -37,33 +47,59 @@ const disableCards = () => {
         }
         changeAllCards('pointer', null)
         isFirst = true;
-    },1200);
+    },600);
 };
 
-const roundWon = () => {
+const resetGame = () => {
+    pictureArr.splice(0,pictureArr.length);
+    numOfSetsFound = 0;
+};
+
+const gameWon = () => {
+    resetGame();
     gridContainer.innerHTML = `<h1>You Won!</h1>`;
 };
 
-const checkForSet = (cardNum) => {
-    if(!isFirst && lastClicked === pictureArr[cardNum]){
-        document.getElementById(`card-${cardNum+1}`).className = 'card set';
+const gameLost = () => {
+    resetGame();
+    gridContainer.innerHTML = `<h1>You Lost!</h1>`;
+};
+
+const notASet = () => {
+    currentLives--;
+    if (currentLives > 0){
+        setLives();
+    } else {
+        gameLost();
+    }
+    document.querySelector('#game-screen').style.backgroundColor = '#FFD580';
+        setTimeout(() => {
+        document.querySelector('#game-screen').style.backgroundColor = 'lightgreen';
+    },1200);
+};
+
+const checkForSet = () => {
+    if(!isFirst && lastClicked === pictureArr[currentCard]){
+        document.getElementById(`card-${currentCard+1}`).className = 'card set';
         document.getElementById(`card-${lastClickedIndex+1}`).className = 'card set';
         numOfSetsFound++;
         if(numOfSetsFound === numOfCards/2){
-            roundWon();
+            gameWon();
         }
+    }
+    if (!isFirst && lastClicked !== pictureArr[currentCard]){
+        notASet();
     }
 };
 
-const showCard = (cardDiv, cardNum) => {
+const showCard = (cardDiv) => {
     if(cardDiv.innerText) return;
-    console.log(numOfSetsFound, numOfCards)
     if(cardsClickable){
         disableCards();
-        checkForSet(cardNum);
-        cardDiv.innerText = pictureArr[cardNum];
-        lastClicked = pictureArr[cardNum];
-        lastClickedIndex = cardNum;
+        checkForSet();
+        cardDiv.innerText = pictureArr[currentCard];
+        lastClicked = pictureArr[currentCard];
+        lastClickedIndex = currentCard;
     }
 };
 
@@ -96,10 +132,13 @@ const showTopBar = () => {
 const startGame = () => {
     showTopBar();
     makeCards();
+    currentLives = lives;
+    setLives();
     const cardDivs = gridContainer.children;
     for (let i = 0; i < cardDivs.length; i++){
         cardDivs[i].addEventListener('click', () => {
-            showCard(cardDivs[i], i);
+            currentCard = i;
+            showCard(cardDivs[i]);
         })
     }
 };

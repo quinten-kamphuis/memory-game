@@ -4,16 +4,27 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 body {
-    font-size: 10px;
+    font-size: 1.5vh;
     background-color: black;
 }
 #top-bar{
     background-color: white;
     display: flex;
     justify-content: space-between;
-    font-size: 2.6em;
+    font-size: 4.0vh;
+    padding: 1vh 2vh;
+}
+#lives {
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
 }
 #game-screen, #start-screen{
     margin: 0 auto;
@@ -38,19 +49,22 @@ body {
 #start-screen{
     flex-direction: column;
 }
+#menu-btn{
+    cursor: pointer;
+}
 .menu-button{
-    height: 60px;
-    width: 400px;
+    width: 40vw;
+    min-width: 225px;
     margin: 20px;
     border-radius: 10px;
     background-color: white;
     text-align: center;
-    font-size: 4.6em;
+    font-size: 3.8em;
     cursor: pointer;
 }
 .card {
     aspect-ratio: 1 / 1.2;
-    border-radius: 10px;
+    border-radius: 2.5vh;
     background-color: white;
     text-align: center;
     font-size: 4.6em;
